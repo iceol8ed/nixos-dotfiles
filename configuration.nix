@@ -8,7 +8,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 1;
+  boot.loader.timeout = 0;
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
@@ -60,6 +60,11 @@
   
   programs.zsh = {
     enable = true;
+    loginShellInit = ''
+    if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+      exec sway
+    fi
+    '';
     interactiveShellInit = ''
     export PROMPT='%1~ %# '
     typeset -A ZSH_HIGHLIGHT_STYLES
@@ -104,6 +109,7 @@
     wget
     zip
     fastfetch
+    playerctl
     unzip
     gcc
     btop

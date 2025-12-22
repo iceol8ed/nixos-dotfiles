@@ -52,7 +52,7 @@
           { run = ''hx "$@"''; block = true; desc = "Helix"; }
         ];
         web-browser = [
-          { run = ''chromium "$@"''; block = false; desc = "Open in Chromium"; }
+          { run = ''chromium "$@"''; block = false; orphan = true; desc = "Open in Chromium"; }
         ];
       };
 
@@ -136,6 +136,22 @@
         };
       };
 
+      output = {
+        "HDMI-A-1" = {
+          mode = "1920x1080";
+          pos = "0 0";
+          transform = "270";
+        };
+        "DP-2" = {
+          mode = "2560x1440";
+          pos = "1080 0"; 
+        };
+      };
+
+      workspaceOutputAssign = [
+        { workspace = "5"; output = "HDMI-A-1"; }
+      ];
+
       # --- Visuals & Decoration --- 
       window = {
         border = 0; # or 1, 2 etc. "none" is usually 0
@@ -160,10 +176,8 @@
         { command = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"; always = true; }
         { command = "wl-clip-persist --clipboard regular"; }
         { command = "wl-paste --watch cliphist store"; }
-        { command = "swaymsg workspace 1"; } # This line ensures you start on workspace 1
-        # Note: Paths like /usr/lib/ don't exist in NixOS. 
-        # We use the pkgs variable to point to the correct store path. 
         { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
+        { command = "swaymsg focus output DP-2"; }
       ];
 
       # --- Keybindings --- [cite: 4, 5, 8, 9]
@@ -219,6 +233,10 @@
         "XF86AudioRaiseVolume" = "exec wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 3%+";
         "XF86AudioLowerVolume" = "exec wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 3%-";
         "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        "XF86AudioPlay" = "exec playerctl play-pause";
+        "XF86AudioNext" = "exec playerctl next";
+        "XF86AudioPrev" = "exec playerctl previous";
+        "XF86AudioStop" = "exec playerctl stop";
 
         # Wtype Macros
         "${modifier}+c" = "exec wtype -M ctrl -k Insert -m ctrl";
