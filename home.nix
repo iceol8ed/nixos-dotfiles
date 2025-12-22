@@ -242,6 +242,9 @@
     settings = {
       theme = "tokyonight_transparent";
       editor = {
+        whitespace.render = {
+          tab = "none";
+        };
         line-number = "relative";
         cursor-shape = {
           insert = "bar";

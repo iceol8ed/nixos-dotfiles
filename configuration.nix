@@ -2,21 +2,18 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
       ./hardware-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 1;
 
-  # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos";
 
-  # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
 
   networking.firewall = {
@@ -26,10 +23,8 @@
 
   hardware.bluetooth.enable = true;
 
-  # Set your time zone.
   time.timeZone = "Europe/Athens";
 
-  # Enable sound.
   services.pipewire = {
     enable = true;
     pulse.enable = true;
@@ -38,22 +33,17 @@
   system.autoUpgrade = {
     enable = true;
 
-    # since your flake is located at /etc/nixos:
     flake = "/etc/nixos";
 
-    # timer schedule: weekly
     dates = "weekly";
 
-    # optional quality-of-life settings:
     randomizedDelaySec = "30min";
     operation = "switch";
     allowReboot = false;
 
-    # rebuild flags
     flags = [ "-L" ];
   };
   
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ice = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "render" ]; # Enable ‘sudo’ for the user.
@@ -83,10 +73,11 @@
       co = "sudo hx /etc/nixos/configuration.nix";
       fl = "sudo hx /etc/nixos/flake.nix";
       ho = "sudo hx /etc/nixos/home.nix";
+      sy = "cp /etc/nixos/{configuration.nix,flake.nix,flake.lock,home.nix} ~/nixos-dotfiles/ && cd ~/nixos-dotfiles && git add . && git commit -m 'ship it' && git push && cd - >/dev/null";
       von = "sudo wg-quick up protonvpn";
       voff = "sudo wg-quick down protonvpn";
     };
-};
+  };
 
   users.defaultUserShell = pkgs.zsh;
 
@@ -132,11 +123,12 @@
     noto-fonts
     noto-fonts-cjk-sans
   ];
+
   fonts.fontconfig = {
     defaultFonts = {
       monospace = [ "JetBrainsMono Nerd Font" ];
     };
   };
-  system.stateVersion = "25.11"; # Did you read the comment?
 
+  system.stateVersion = "25.11";
 }
