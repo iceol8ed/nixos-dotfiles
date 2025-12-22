@@ -52,6 +52,12 @@
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword=false;
 
+  environment.variables = {
+    EDITOR = "hx";
+    VISUAL = "hx";
+  };
+
+  
   programs.zsh = {
     enable = true;
     interactiveShellInit = ''
@@ -65,7 +71,6 @@
     enableCompletion = true;
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
-
     shellAliases = {
       nos = "sudo nixos-rebuild switch";
       nuf = "sudo nix flake update --flake /etc/nixos";
@@ -122,6 +127,7 @@
     nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans
+    noto-fonts-color-emoji
   ];
 
   fonts.fontconfig = {

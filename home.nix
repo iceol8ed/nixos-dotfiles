@@ -44,26 +44,28 @@
 
   programs.yazi = {
     enable = true;
-    
-    # Enables shell integrations for automatic directory switching
-    enableZshIntegration = true; 
-    enableBashIntegration = true;
-
-    # Maps directly to your yazi.toml file
-    settings = {
+    enableZshIntegration = true; # Optional
+      settings = {
       opener = {
-        open = [
-          { 
-            run = "xdg-open \"$@\""; 
-            orphan = true; 
-            desc = "Open"; 
-            for = "unix"; 
-          }
+        # Define the chromium opener
+        edit = [
+          { run = ''hx "$@"''; block = true; desc = "Helix"; }
+        ];
+        web-browser = [
+          { run = ''chromium "$@"''; block = false; desc = "Open in Chromium"; }
+        ];
+      };
+
+      open = {
+        rules = [
+          # Map PDF files to the web-browser opener
+          { mime = "application/pdf"; use = "web-browser"; }
+          { mime = "text/*"; use = "edit"; }
         ];
       };
     };
   };
-
+    
   programs.fuzzel = {
     enable = true;
     settings = {
