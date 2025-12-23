@@ -108,11 +108,10 @@
   environment.systemPackages = with pkgs; [
     wget
     zip
-    fastfetch
+    microfetch
     playerctl
     unzip
-    gcc
-    btop
+    bottom
     grim
     slurp
     wl-clipboard 
