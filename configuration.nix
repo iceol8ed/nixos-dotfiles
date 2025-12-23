@@ -66,12 +66,14 @@
     fi
     '';
     interactiveShellInit = ''
-    export PROMPT='%1~ %# '
     typeset -A ZSH_HIGHLIGHT_STYLES
     ZSH_HIGHLIGHT_STYLES[path]=none
     ZSH_HIGHLIGHT_STYLES[path_prefix]=none
     ZSH_HIGHLIGHT_STYLES[path_separator]=none
     ZSH_HIGHLIGHT_STYLES[precommand]=none
+    '';
+    promptInit = ''
+    export PS1="%~ > "
     '';
     enableCompletion = true;
     autosuggestions.enable = true;
