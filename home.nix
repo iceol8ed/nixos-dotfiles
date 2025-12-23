@@ -171,6 +171,7 @@
         { command = "wl-paste --watch cliphist store"; }
         { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
         { command = "swaymsg focus output DP-2"; }
+        { command = "swaymsg workspace 1"; }
       ];
 
       keybindings = lib.mkOptionDefault {
