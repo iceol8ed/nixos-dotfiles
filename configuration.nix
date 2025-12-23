@@ -80,9 +80,9 @@
       nos = "sudo nixos-rebuild switch";
       nuf = "sudo nix flake update --flake /etc/nixos";
       ncg = "sudo nix-collect-garbage -d";
-      co = "sudo hx /etc/nixos/configuration.nix";
-      fl = "sudo hx /etc/nixos/flake.nix";
-      ho = "sudo hx /etc/nixos/home.nix";
+      co = "sudo -E hx /etc/nixos/configuration.nix";
+      fl = "sudo -E hx /etc/nixos/flake.nix";
+      ho = "sudo -E hx /etc/nixos/home.nix";
       sy = "cp /etc/nixos/{configuration.nix,flake.nix,flake.lock,home.nix} ~/nixos-dotfiles/ && cd ~/nixos-dotfiles && git add . && git commit -m 'ship it' && git push && cd - >/dev/null";
       von = "sudo wg-quick up protonvpn";
       voff = "sudo wg-quick down protonvpn";
