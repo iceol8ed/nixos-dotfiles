@@ -125,7 +125,6 @@
     wiremix
     cliphist
     fzf
-    ungoogled-chromium
     wireguard-tools
   ];
 
