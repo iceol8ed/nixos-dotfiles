@@ -51,14 +51,19 @@
           { run = ''hx "$@"''; block = true; desc = "Helix"; }
         ];
         web-browser = [
-          { run = ''helium "$@"''; block = false; orphan = true; desc = "Open in Helium"; }
+        { 
+          run = ''xdg-open "$@"''; 
+          block = false; 
+          orphan = true; 
+          desc = "Open in Default Browser"; 
+        }
         ];
       };
 
       open = {
         rules = [
-          { mime = "application/pdf"; use = "web-browser"; }
           { mime = "text/*"; use = "edit"; }
+          { name = "*"; use = "web-browser"; }
         ];
       };
     };

@@ -48,7 +48,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "render" ]; # Enable ‘sudo’ for the user.
   };
-  
+
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword=false;
 
@@ -111,6 +111,7 @@
     wget
     zip
     microfetch
+    xdg-utils
     playerctl
     unzip
     bottom
