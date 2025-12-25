@@ -47,6 +47,13 @@
     enableZshIntegration = true; 
       settings = {
       opener = {
+        extract = [
+          {
+            run = ''unzip "$1" -d "''${1%.*}"'';
+            desc = "Extract here";
+            for = "unix";
+          }
+        ];
         edit = [
           { run = ''hx "$@"''; block = true; desc = "Helix"; }
         ];
@@ -63,6 +70,9 @@
       open = {
         rules = [
           { mime = "text/*"; use = "edit"; }
+          { mime = "application/zip"; use = "extract"; }
+          { mime = "application/x-7z-compressed"; use = "extract"; }
+          { mime = "application/x-rar"; use = "extract"; }
           { name = "*"; use = "web-browser"; }
         ];
       };
