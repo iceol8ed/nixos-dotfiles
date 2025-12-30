@@ -46,7 +46,7 @@
   
   users.users.ice = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "render" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "video" "render" "dialout" ]; # Enable ‘sudo’ for the user.
   };
 
   security.sudo.enable = true;
@@ -104,13 +104,15 @@
   };
 
   swapDevices = [];
-
+ 
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     wget
     zip
     microfetch
+    nmap
+    python3
     xdg-utils
     playerctl
     unzip

@@ -109,7 +109,6 @@
       speed = 2.0;                   
       fullscreen = "yes";            
       gpu-context = "wayland";       
-      sub-scale = 0.5;               
     };
   };
   
@@ -221,6 +220,8 @@
         "${modifier}+space" = "exec ${menu}";
         "${modifier}+m" = "exec GTK_CSD=0 localsend_app";
         "${modifier}+s" = "exec spotify";
+        "${modifier}+g" = "exec xdg-open https://gemini.google.com";
+        "${modifier}+y" = "exec xdg-open https://youtube.com";
         "${modifier}+Shift+f" = "fullscreen";
         "${modifier}+Shift+t" = "floating toggle";
 
@@ -244,6 +245,7 @@
         "${modifier}+v" = "exec wtype -M shift -k Insert -m shift";
         "${modifier}+a" = "exec wtype -M ctrl -k a -m ctrl";
         "${modifier}+w" = "exec wtype -M ctrl -k w -m ctrl";
+        "${modifier}+t" = "exec wtype -M ctrl -k t -m ctrl";
         "${modifier}+backspace" = "exec wtype -M ctrl -k u -m ctrl";
       };
 
