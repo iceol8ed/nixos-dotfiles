@@ -30,6 +30,22 @@
     pulse.enable = true;
   };
 
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.epson-escpr ];
+    tempDir = "/var/spool/cups/tmp"; 
+  };
+
+  documentation.nixos.enable = false;
+  
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  programs.gamemode.enable = true;
+
   system.autoUpgrade = {
     enable = true;
 
@@ -46,7 +62,7 @@
   
   users.users.ice = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "render" "dialout" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "video" "render" "dialout" "lp" ]; # Enable ‘sudo’ for the user.
   };
 
   security.sudo.enable = true;
@@ -88,6 +104,7 @@
       sy = "cp /etc/nixos/{configuration.nix,flake.nix,flake.lock,home.nix} ~/nixos-dotfiles/ && cd ~/nixos-dotfiles && git add . && git commit -m 'ship it' && git push && cd - >/dev/null";
       von = "sudo wg-quick up protonvpn";
       voff = "sudo wg-quick down protonvpn";
+      crack = "cd ~/handshakes && cat *.22000 > targets.hashes && hashcat -m 22000 -a 3 -w 3 targets.hashes '2741?d?d?d?d?d?d' && hashcat -m 22000 targets.hashes ~/rockyou.txt";
     };
   };
 
@@ -111,7 +128,15 @@
     wget
     zip
     microfetch
+    prismlauncher
+    aircrack-ng
+    qrencode
+    hcxtools
+    hashcat
+    epson-escpr
+    steam
     nmap
+    net-tools
     python3
     xdg-utils
     playerctl
