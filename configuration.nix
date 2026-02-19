@@ -14,6 +14,30 @@
 
   networking.hostName = "nixos";
 
+  networking.wg-quick.interfaces = {
+  protonvpn = {
+    # 1. Interface Settings (Your Identity)
+    address = [ "10.2.0.2/32" ];
+    dns = [ "10.2.0.1" ];
+    privateKey = "oJ9JhQpUhezyp3caD1rmR578MgVH4I2ZwJOtpL2fYVY=";
+    autostart = false;
+
+    # 2. Peer Settings (The Proton Server)
+    peers = [
+      {
+        publicKey = "Io8cLLfUyY9INwZ26X+thOzpMGRim0ek1VzZ19RpM2o=";
+        allowedIPs = [ "0.0.0.0/0" "::/0" ];
+        endpoint = "185.252.220.146:51820";
+      }
+    ];
+  };
+};
+
+environment.shellAliases = {
+  von = "sudo systemctl start wg-quick-protonvpn";
+  voff = "sudo systemctl stop wg-quick-protonvpn";
+};  
+
   networking.networkmanager.enable = true;
 
   networking.firewall = {
@@ -45,20 +69,9 @@
   };
 
   programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
 
-  system.autoUpgrade = {
-    enable = true;
-
-    flake = "/etc/nixos";
-
-    dates = "weekly";
-
-    randomizedDelaySec = "30min";
-    operation = "switch";
-    allowReboot = false;
-
-    flags = [ "-L" ];
-  };
+  nix.settings.auto-optimise-store = true;
   
   users.users.ice = {
     isNormalUser = true;
@@ -102,8 +115,8 @@
       fl = "sudo -E hx /etc/nixos/flake.nix";
       ho = "sudo -E hx /etc/nixos/home.nix";
       sy = "cp /etc/nixos/{configuration.nix,flake.nix,flake.lock,home.nix} ~/nixos-dotfiles/ && cd ~/nixos-dotfiles && git add . && git commit -m 'ship it' && git push && cd - >/dev/null";
-      von = "sudo wg-quick up protonvpn";
-      voff = "sudo wg-quick down protonvpn";
+      von = "sudo systemctl start wg-quick-protonvpn";
+      voff = "sudo systemctl stop wg-quick-protonvpn";
       crack = "cd ~/handshakes && cat *.22000 > targets.hashes && hashcat -m 22000 -a 3 -w 3 targets.hashes '2741?d?d?d?d?d?d' && hashcat -m 22000 targets.hashes ~/rockyou.txt";
     };
   };
