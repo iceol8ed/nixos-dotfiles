@@ -8,7 +8,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 0;
+  boot.loader.timeout = 3;
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
@@ -31,6 +31,11 @@
     };
   };
 
+  environment.shellAliases = {
+    von = "sudo systemctl start wg-quick-protonvpn";
+    voff = "sudo systemctl stop wg-quick-protonvpn";
+  };  
+
   networking.networkmanager.enable = true;
 
   networking.firewall = {
@@ -47,12 +52,6 @@
     pulse.enable = true;
   };
 
-  services.printing = {
-    enable = true;
-    drivers = [ pkgs.epson-escpr ];
-    tempDir = "/var/spool/cups/tmp"; 
-  };
-
   documentation.nixos.enable = false;
   
   services.avahi = {
@@ -60,9 +59,6 @@
     nssmdns4 = true;
     openFirewall = true;
   };
-
-  programs.gamemode.enable = true;
-  programs.gamescope.enable = true;
 
   nix.settings.auto-optimise-store = true;
   
@@ -110,7 +106,6 @@
       sy = "cp /etc/nixos/{configuration.nix,flake.nix,flake.lock,home.nix} ~/nixos-dotfiles/ && cd ~/nixos-dotfiles && git add . && git commit -m 'ship it' && git push && cd - >/dev/null";
       von = "sudo systemctl start wg-quick-protonvpn";
       voff = "sudo systemctl stop wg-quick-protonvpn";
-      crack = "cd ~/handshakes && cat *.22000 > targets.hashes && hashcat -m 22000 -a 3 -w 3 targets.hashes '2741?d?d?d?d?d?d' && hashcat -m 22000 targets.hashes ~/rockyou.txt";
     };
   };
 
@@ -119,31 +114,14 @@
   services.getty.autologinUser = "ice";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    priority = 100;
-    memoryMax = 4294967296;
-  };
-
-  swapDevices = [];
- 
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     wget
     zip
     microfetch
-    prismlauncher
-    aircrack-ng
-    qrencode
-    hcxtools
-    hashcat
-    epson-escpr
-    steam
     nmap
     net-tools
-    python3
     xdg-utils
     playerctl
     unzip
