@@ -64,7 +64,7 @@
   
   users.users.ice = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "render" "dialout" "lp" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "video" "render" "dialout" "lp" ]; 
   };
 
   security.sudo.enable = true;
