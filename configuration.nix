@@ -47,12 +47,6 @@
     pulse.enable = true;
   };
 
-  services.printing = {
-    enable = true;
-    drivers = [ pkgs.epson-escpr ];
-    tempDir = "/var/spool/cups/tmp"; 
-  };
-
   documentation.nixos.enable = false;
   
   services.avahi = {
@@ -68,7 +62,7 @@
   
   users.users.ice = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "render" "dialout" "lp" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "video" "render" "dialout" ]; # Enable ‘sudo’ for the user.
   };
 
   security.sudo.enable = true;
@@ -134,6 +128,9 @@
     wget
     zip
     microfetch
+    sioyek
+    gemini-cli
+    nicotine-plus
     prismlauncher
     aircrack-ng
     qrencode

@@ -20,28 +20,6 @@
     };
   };  
 
-  imports = [
-    inputs.spicetify-nix.homeManagerModules.default
-  ];
-
-  programs.spicetify =
-  let
-    spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-  in
-  {
-    enable = true;
-
-    enabledExtensions = with spicePkgs.extensions; [
-      adblock
-      hidePodcasts
-      keyboardShortcut
-    ];
-    enabledCustomApps = with spicePkgs.apps; [
-    ];
-    enabledSnippets = with spicePkgs.snippets; [
-    ];
-  };
-
   programs.yazi = {
     enable = true;
     enableZshIntegration = true; 
@@ -219,9 +197,9 @@
         "${modifier}+Shift+n" = "exec ${terminal} wiremix";
         "${modifier}+space" = "exec ${menu}";
         "${modifier}+m" = "exec GTK_CSD=0 localsend_app";
-        "${modifier}+s" = "exec spotify";
         "${modifier}+g" = "exec xdg-open https://gemini.google.com";
         "${modifier}+y" = "exec xdg-open https://youtube.com";
+        "${modifier}+r" = "exec xdg-open https://reddit.com";
         "${modifier}+Shift+f" = "fullscreen";
         "${modifier}+Shift+t" = "floating toggle";
 
