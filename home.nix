@@ -92,6 +92,7 @@
   
   programs.foot = {
     enable = true;
+    server.enable = false;
     settings = {
       main = {
         font = "JetBrainsMono Nerd Font:size=11";
@@ -101,7 +102,7 @@
         style = "beam";
       };
 
-      colors = {
+      colors-dark = {
         background = "000000";
       };
     };
@@ -191,6 +192,7 @@
 
         "${modifier}+q" = "kill";
         "${modifier}+b" = "exec helium";
+        "${modifier}+Shift+b" = "exec helium --incognito";
         "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+f" = "exec ${terminal} yazi";
         "${modifier}+n" = "exec ${terminal} bluetui";
@@ -264,7 +266,8 @@
 
   home.packages = [
     inputs.lobster.packages.${pkgs.system}.lobster
-    pkgs.nur.repos.Ev357.helium
+    pkgs.nur.repos.forkprince.helium-nightly
+    pkgs.clang-tools
   ];
 
   xdg.configFile."lobster/lobster_config.sh".text = ''

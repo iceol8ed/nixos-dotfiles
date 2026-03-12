@@ -10,6 +10,18 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
 
+  boot.kernelParams = [
+  "quiet"
+  "splash"
+  "vga=current"
+  "rd.systemd.show_status=false"
+  "rd.udev.log_level=3"
+  "udev.log_priority=3"
+  ];
+
+  boot.consoleLogLevel = 0;
+  boot.initrd.verbose = false;
+
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   networking.hostName = "nixos";
@@ -73,7 +85,6 @@
     VISUAL = "hx";
   };
 
-  
   programs.zsh = {
     enable = true;
     loginShellInit = ''
@@ -101,6 +112,24 @@
       co = "sudo -E hx /etc/nixos/configuration.nix";
       fl = "sudo -E hx /etc/nixos/flake.nix";
       ho = "sudo -E hx /etc/nixos/home.nix";
+      cf = let
+        template = ''
+          {
+            description = "Basic flake";
+            inputs = { nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; };
+            outputs = { self, nixpkgs }:
+              let
+                system = "x86_64-linux";
+                pkgs = import nixpkgs { inherit system; };
+              in {
+                devShells.''${system}.default = pkgs.mkShell {
+                  packages = with pkgs; [];
+                };
+              };
+          }
+        '';
+        in "[[ -f flake.nix ]] || echo '${template}' > flake.nix && hx flake.nix";
+      nd = "nix develop";
       sy = "cp /etc/nixos/{configuration.nix,flake.nix,flake.lock,home.nix} ~/nixos-dotfiles/ && cd ~/nixos-dotfiles && git add . && git commit -m 'ship it' && git push && cd - >/dev/null";
       von = "sudo systemctl start wg-quick-protonvpn";
       voff = "sudo systemctl stop wg-quick-protonvpn";
@@ -128,9 +157,8 @@
     wget
     zip
     microfetch
-    sioyek
+    ladybird
     gemini-cli
-    nicotine-plus
     prismlauncher
     aircrack-ng
     qrencode
