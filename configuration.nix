@@ -11,6 +11,7 @@
   boot.loader.timeout = 0;
 
   boot.kernelParams = [
+  "amd_pstate=active"
   "quiet"
   "splash"
   "vga=current"
@@ -22,7 +23,7 @@
   boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
   networking.hostName = "nixos";
 
@@ -44,6 +45,7 @@
   };
 
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
 
   networking.firewall = {
   allowedTCPPorts = [ 53317 ];
@@ -59,7 +61,7 @@
     pulse.enable = true;
   };
 
-  documentation.nixos.enable = false;
+  documentation.enable = false;
   
   services.avahi = {
     enable = true;
@@ -157,6 +159,7 @@
     wget
     zip
     microfetch
+    impala
     ladybird
     gemini-cli
     prismlauncher

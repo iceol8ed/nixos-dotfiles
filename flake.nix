@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     lobster.url = "github:justchokingaround/lobster";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -12,13 +13,16 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, lobster, nur, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, lobster, nur, chaotic, ... }@inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
+        chaotic.nixosModules.default
         {
-          nixpkgs.overlays = [ nur.overlays.default ];
+          nixpkgs.overlays = [
+            nur.overlays.default
+            chaotic.overlays.default ];
         }
         home-manager.nixosModules.home-manager
           {
